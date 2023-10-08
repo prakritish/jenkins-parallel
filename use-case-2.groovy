@@ -1,5 +1,3 @@
-@Library("parallel-jobs") _
-
 pipeline {
   // We don't care where this pipeline runs
   agent any
