@@ -61,5 +61,15 @@ pipeline {
         }
       }
     }
+    stage("Post Matrix") {
+      steps {
+        echo "Matrix Stages completed"
+      }
+    }
+  }
+  post {
+    always {
+      echo "All Done!"
+    }
   }
 }
