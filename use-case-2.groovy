@@ -26,5 +26,10 @@ pipeline {
         }
       }
     }
+    stage("Post Parallel Stage") {
+      steps {
+        echo "Parallel stages are done"
+      }
+    }
   }
 }
