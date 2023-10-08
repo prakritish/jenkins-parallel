@@ -30,12 +30,32 @@ pipeline {
         echo "This is Pre-Parallel Stage"
       }
     }
-    stage("Parallel Stages") {
-      // This map 'targets' would contain a named list of jobs to be executed in parallel
-      // Starting the parallel jobs
-      steps {
-        script {
-          parallel targets
+    stage("Matrix Stages") {
+      matrix {
+        axes {
+          axis {
+            name "LABEL"
+            values "WIN", "OSX", "LINUX"
+          }
+          axis {
+            name "NODE_VERSION"
+            values "12.22.12", "14.21.3", "16.20.2", "18.18.0"
+          }
+        }
+        stage("Build") {
+          steps {
+            echo "Do Build for OS: ${LABEL} - Node Version: ${NODE_VERSION}"
+          }
+        }
+        stage("Report") {
+          steps {
+            echo "Done"
+          }
+        }
+        post {
+          always {
+            echo "Build completed for OS: ${LABEL} - Node Version: ${NODE_VERSION}"
+          }
         }
       }
     }
