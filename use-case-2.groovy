@@ -33,7 +33,9 @@ pipeline {
     stage("Parallel Stages") {
       // This map 'targets' would contain a named list of jobs to be executed in parallel
       // Starting the parallel jobs
-      parallel targets
+      steps {
+        parallel targets
+      }
     }
   }
 }
