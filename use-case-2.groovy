@@ -42,14 +42,16 @@ pipeline {
             values "12.22.12", "14.21.3", "16.20.2", "18.18.0"
           }
         }
-        stage("Build") {
-          steps {
-            echo "Do Build for OS: ${LABEL} - Node Version: ${NODE_VERSION}"
+        stages {
+          stage("Build") {
+            steps {
+              echo "Do Build for OS: ${LABEL} - Node Version: ${NODE_VERSION}"
+            }
           }
-        }
-        stage("Report") {
-          steps {
-            echo "Done"
+          stage("Report") {
+            steps {
+              echo "Done"
+            }
           }
         }
         post {
