@@ -8,7 +8,7 @@ def call(String nodeVersion, String label) {
                 stage("Build") {
                     echo "Building on OS: ${label} with Node Version: ${nodeVersion}"
                     // Sleeping for random number of seconds to emulate a build job
-                    sleep(Math.abs(new Random().nextInt() % 600) + 1)
+                    sleep(Math.abs(new Random().nextInt() % 180) + 1)
                 }
                 stage("Report") {
                     echo "Build completed!"
