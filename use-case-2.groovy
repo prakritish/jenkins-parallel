@@ -25,7 +25,7 @@ pipeline {
           }
         }
         agent {
-          label "${NODE_VERSION}"
+          label "${LABEL}"
         }
         stages {
           stage("Build") {
