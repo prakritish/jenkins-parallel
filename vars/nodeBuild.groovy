@@ -5,9 +5,7 @@ def call(String nodeVersion, String label) {
                 label "${label}"
             }
             stage("Build") {
-                steps {
-                    echo "Building on OS: ${label} with Node Version: ${nodeVersion}"
-                } 
+                echo "Building on OS: ${label} with Node Version: ${nodeVersion}"
             }
             post {
                 always {
