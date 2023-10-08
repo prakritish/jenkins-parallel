@@ -4,7 +4,7 @@ def call(String nodeVersion, String label) {
             agent {
                 label "${label}"
             }
-            steps {
+            step {
                 echo "Building on OS: ${label} with Node Version: ${nodeVersion}"
             }
             post {
