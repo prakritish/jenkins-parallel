@@ -8,11 +8,6 @@ def call(String nodeVersion, String label) {
                 echo "Building on OS: ${label} with Node Version: ${nodeVersion}"
             }
         }
-        post {
-            always {
-                echo "Job Completed"
-            }
-        }
     }
     return parallelStage
 }
