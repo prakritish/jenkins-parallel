@@ -16,10 +16,10 @@ pipeline {
     stage("Parallel Stages") {
       steps {
         script {
-          def targets = []
+          def targets = [:]
           for (String node : versions) {
             for (String os : osLabel) {
-              targets.add(nodeBuild(node, os))
+              targets["${os}-${node}"] = nodeBuild(node, os)
             }
           }
           parallel targets
