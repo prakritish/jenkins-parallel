@@ -5,6 +5,7 @@ pipeline {
   agent any
   options {
     timestamps ()
+    skipDefaultCheckout()
   }
   stages {
     stage("Pre-Parallel Stage") {
