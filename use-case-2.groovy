@@ -42,5 +42,10 @@ pipeline {
         echo "Parallel stages are done"
       }
     }
+    post {
+      always {
+        echo "Everything done!"
+      }
+    }
   }
 }
