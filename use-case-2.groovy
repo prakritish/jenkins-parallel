@@ -8,6 +8,16 @@ String[] osLabel = ["WIN", "OSX", "LINUX"]
 // The total numer of parallel jobs would versions.size() * osLabel.size()
 // In this example total number of parallel jobs = 4 * 3 = 12
 
+def targets = [:]
+for (String node : versions) {
+  for (String os : osLabel) {
+    // Populating the map 'targets'
+    // nodeBuild(String, String) is coming from shared library 'vars/nodeBuild.groovy'
+    targets["${os}-${node}"] = nodeBuild(node, os)
+  }
+}
+
+
 pipeline {
   // We don't care where this pipeline runs
   agent any
@@ -21,21 +31,9 @@ pipeline {
       }
     }
     stage("Parallel Stages") {
-      steps {
-        script {
-          // This map 'targets' would contain a named list of jobs to be executed in parallel
-          def targets = [:]
-          for (String node : versions) {
-            for (String os : osLabel) {
-              // Populating the map 'targets'
-              // nodeBuild(String, String) is coming from shared library 'vars/nodeBuild.groovy'
-              targets["${os}-${node}"] = nodeBuild(node, os)
-            }
-          }
-          // Starting the parallel jobs
-          parallel targets
-        }
-      }
+      // This map 'targets' would contain a named list of jobs to be executed in parallel
+      // Starting the parallel jobs
+      parallel targets
     }
   }
 }
