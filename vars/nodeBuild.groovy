@@ -7,10 +7,10 @@ def call(String nodeVersion, String label) {
             stage("Build") {
                 echo "Building on OS: ${label} with Node Version: ${nodeVersion}"
             }
-            post {
-                always {
-                    echo "Job Completed"
-                }
+        }
+        post {
+            always {
+                echo "Job Completed"
             }
         }
     }
