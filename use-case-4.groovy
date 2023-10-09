@@ -5,6 +5,8 @@ pipeline {
     skipDefaultCheckout()
   }
   environment {
+  // Setting these as Environment variables for the example.
+  // Ideally these should come as parameter from Jenkins.
     NO_OF_THREADS = 5
     AGENT_LABEL = "LINUX"
     GITHUB_REPOS = """
@@ -49,22 +51,43 @@ pipeline {
     stage("Parallel Stage") {
       steps {
         script {
+          // We'll use this Array to store all the repositories provided.
           def repos = []
+          // Removing any white spaces and splitting it
           def repoList = env.GITHUB_REPOS.strip().split('\n')
           for (String repo: repoList) {
             if (repo) {
+              // Strip white spaces and add it to the Array.
               repos.add(repo.strip())
             }
           }
           def repoCount = repos.size()
           def threads = env.NO_OF_THREADS.toInteger()
           echo "No. of Parallel Scans allowed: ${NO_OF_THREADS}"
+/*
+          This is important to note. The `repos` is a single dimensional array
+          We are using 'collate' to convert this into a two dimensinal array.
+          Say,
+            repos = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"]
+          The statement
+            repo_group = repos.collate 4
+          would create a two dimensional array as
+            repo_group = [
+              ["a", "b", "c", "d"], 
+              ["e", "f", "g", "h"],
+              ["i", "j", "k"]
+            ]
+          Or in other words, split the original array into an array of smaller arrays.
+*/
           def repo_group = repos.collate threads
           for (def row : repo_group) {
             def targets = [:]
             for (String repo : row) {
+              // We pass the empty map targets by reference to generateTargets along with other
+              // parameters. The function generateTargets populates the map 'targets'
               generateTargets(targets, repo, env.AGENT_LABEL)
             }
+            // Execute parallel stages
             parallel targets
           }
         }
