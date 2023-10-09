@@ -49,7 +49,7 @@ pipeline {
     stage("Parallel Stage") {
       steps {
         script {
-          String[] repos = []
+          def repos = []
           def repoList = env.GITHUB_REPOS.strip().split('\n')
           for (String repo: repoList) {
             if (repo) {
